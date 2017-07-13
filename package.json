@@ -1,0 +1,30 @@
+{
+  "name": "osx-touchbar-crypto-tickers",
+  "version": "0.0.1",
+  "description": "Use Electron to display Crypto Currency Tickers on MacBooks Pro Touch Bar",
+  "main": "src/ticker.js",
+  "engines": {
+    "node": ">=5.6"
+  },
+  "dependencies": {
+    "parse-json": "^2.2.0",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "electron": "^1.6.3"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "./test/test.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geoffrey/osx-touchbar-crypto-tickers.git"
+  },
+  "author": "Geoffrey Tisserand",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geoffrey/osx-touchbar-crypto-tickers/issues"
+  },
+  "homepage": "https://github.com/geoffrey/osx-touchbar-crypto-tickers#readme"
+}
