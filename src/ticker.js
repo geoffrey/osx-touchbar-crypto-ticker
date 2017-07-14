@@ -2,25 +2,22 @@ const path = require('path');
 const request = require('request');
 const parseJson = require('parse-json');
 const { app, BrowserWindow, TouchBar } = require('electron');
-const { TouchBarButton } = TouchBar;
+const { TouchBarLabel } = TouchBar;
 
 const buttons = [];
 const currencies = [
   {
     productId: 'BTC-USD',
-    icon:      'btc.png'
+    symbol:    '\u20bf'
   },
   {
     productId: 'ETH-USD',
-    icon:      'eth.png'
+    symbol:    '\u039e'
   }
 ];
 
 currencies.forEach(({ productId, icon }) => {
-  buttons.push(new TouchBarButton({
-    icon:            path.join(__dirname, `/currencies/${icon}`),
-    iconPosition:    'left',
-    backgroundColor: '#fff',
+  buttons.push(new TouchBarLabel({
     label:           ''
   }));
 });
@@ -41,12 +38,21 @@ const updateTickers = () => {
     const currency = currencies[index];
     getLatestTick(currency.productId, (error, response, body) => {
       if (error) {
-        button.label = `${currency.productId}: error!`;
+        button.label = `${currency.symbol}: error!`;
         return;
       }
 
       const json = parseJson(body);
-      button.label = `$${parseFloat(json.price, 2)}`;
+      const price = parseFloat(json.price, 2);
+      if (currency.price < price) {
+        button.textColor = '#98FB98';
+      } else if (currency.price > price) {
+        button.textColor = '#FB9898';
+      } else {
+        button.textColor = '#FFFFFF';
+      }
+      button.label = `${currency.symbol} ${price.toFixed(2)}`;
+      currency.price = price;
     })
   });
 }
